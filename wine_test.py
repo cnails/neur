@@ -15,7 +15,7 @@ wine.data.shape
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(
-    wine.data[:, :2], 
+    wine.data[:, :3], 
     wine.target, 
     test_size=0.3, 
     shuffle=True)
@@ -29,7 +29,7 @@ class WineNet(torch.nn.Module):
     def __init__(self, n_hidden_neurons):
         super(WineNet, self).__init__()
         
-        self.fc1 = torch.nn.Linear(2, n_hidden_neurons)
+        self.fc1 = torch.nn.Linear(3, n_hidden_neurons)
         self.activ1 = torch.nn.Sigmoid()
         self.fc2 = torch.nn.Linear(n_hidden_neurons, n_hidden_neurons)
         self.activ2 = torch.nn.Sigmoid()
@@ -59,7 +59,7 @@ optimizer = torch.optim.Adam(wine_net.parameters(),
 
 batch_size = 10
 
-for epoch in range(5000):
+for epoch in range(1000):
     order = np.random.permutation(len(X_train))
     for start_index in range(0, len(X_train), batch_size):
         optimizer.zero_grad()
